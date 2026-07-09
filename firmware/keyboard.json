@@ -17,12 +17,12 @@
   },
   "matrix_pins": {
     "direct": [
-      ["GP26", "GP27", "GP28", "GP29", "GP6"]
+      ["GP6", "GP27", "GP28", "GP0", "GP29"]
     ]
   },
   "encoder": {
     "rotary": [
-      { "pin_a": "GP7", "pin_b": "GP0", "resolution": 2 }
+      { "pin_a": "GP7", "pin_b": "GP26", "resolution": 2 }
     ]
   },
   "layouts": {
