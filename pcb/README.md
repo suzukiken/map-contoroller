@@ -1,7 +1,9 @@
 # map-controllor PCB (KiCad)
 
-Seeed XIAO RP2040 (U1) と Alps RKJXT1F42001 (SW1) を載せる2層基板。
-`firmware/`(QMK)のピン割り当てと対応している。
+Seeed XIAO RP2040 (U1) と Alps RKJXT1F42001 (SW1) を載せる基板データです。
+
+基板設計の仕様（製造制約・配線ルール・配線案）は [`AGENTS.md`](AGENTS.md) を参照してください。
+AI エージェントに設計を任せる場合は、まず `AGENTS.md` を読ませてください。
 
 ## 構成
 
