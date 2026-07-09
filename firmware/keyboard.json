@@ -1,0 +1,39 @@
+{
+  "manufacturer": "pigotui",
+  "keyboard_name": "map_controllor",
+  "maintainer": "pigotui",
+  "processor": "RP2040",
+  "bootloader": "rp2040",
+  "usb": {
+    "device_version": "1.0.0",
+    "vid": "0xFEED",
+    "pid": "0xBEEF"
+  },
+  "features": {
+    "bootmagic": true,
+    "extrakey": true,
+    "encoder": true,
+    "tap_dance": true
+  },
+  "matrix_pins": {
+    "direct": [
+      ["GP26", "GP27", "GP28", "GP29", "GP6"]
+    ]
+  },
+  "encoder": {
+    "rotary": [
+      { "pin_a": "GP7", "pin_b": "GP0", "resolution": 2 }
+    ]
+  },
+  "layouts": {
+    "LAYOUT": {
+      "layout": [
+        { "label": "Up (C)",    "x": 1, "y": 0, "matrix": [0, 2] },
+        { "label": "Left (D)",  "x": 0, "y": 1, "matrix": [0, 3] },
+        { "label": "Push",      "x": 1, "y": 1, "matrix": [0, 4] },
+        { "label": "Right (B)", "x": 2, "y": 1, "matrix": [0, 1] },
+        { "label": "Down (A)",  "x": 1, "y": 2, "matrix": [0, 0] }
+      ]
+    }
+  }
+}

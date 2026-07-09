@@ -1,0 +1,29 @@
+# OS / エディタ
+.DS_Store
+.vscode
+.cursor/
+
+# Android
+local.properties
+.gradle/
+**/build/
+.kotlin/
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+
+# KiCad
+.history
+*.kicad_prl
+~*.lck
+fp-info-cache
+*-backups/
+pcb/drc_report.json
+
+# QMK / firmware
+.build/
+# *.uf2

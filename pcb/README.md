@@ -1,0 +1,42 @@
+# map-controllor PCB (KiCad)
+
+Seeed XIAO RP2040 (U1) と Alps RKJXT1F42001 (SW1) を載せる2層基板。
+`firmware/`(QMK)のピン割り当てと対応している。
+
+## 構成
+
+- 基板サイズ: 32 x 57 mm (外形 84,59 - 116,116)
+- 取付穴: M3 (径3.2mm) x 4隅
+- B.Cu は GND ベタ
+
+## 結線
+
+| SW1 (RKJXT1F42001) | ネット | U1 (XIAO RP2040) |
+| --- | --- | --- |
+| A | SW_A | pad1 = GP26 (D0) |
+| B | SW_B | pad2 = GP27 (D1) |
+| C | SW_C | pad3 = GP28 (D2) |
+| D | SW_D | pad4 = GP29 (D3) |
+| Push | SW_PUSH | pad5 = GP6 (D4) |
+| EA | ENC_A | pad6 = GP7 (D5) |
+| EB | ENC_B | pad7 = GP0 (D6) |
+| Com / ECom / GND | GND | pad13 = GND |
+
+スイッチ・エンコーダの共通端子はすべて GND に落とし、
+RP2040 の内蔵プルアップ(QMK の direct pins / encoder デフォルト)で読む。
+外付け部品は不要。
+
+## ファイル
+
+- `encoder.kicad_pro` / `encoder.kicad_pcb` — KiCad 10 プロジェクト
+- `footpritn/footpritn.pretty/` — XIAO RP2040 と RKJXT1F42001 のフットプリント
+- `scripts/` — 配線・検証に使った pcbnew スクリプト
+- `render_top.png` / `render_bottom.png` — レンダリング画像
+
+## 検証
+
+```bash
+/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli pcb drc encoder.kicad_pcb
+```
+
+エラー0件・未結線0件(シルクとマスクの重なり警告のみ)。
