@@ -481,6 +481,140 @@
 		)
 		(embedded_fonts no)
 	)
+	(footprint "Suzuki:screwhole"
+		(layer "F.Cu")
+		(uuid "507b2c1a-1f15-4616-b3af-d6e6aae0bd1f")
+		(at 108.75 108)
+		(property "Reference" "REF**"
+			(at 0 -2 0)
+			(unlocked yes)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "bb20326e-06ea-43e5-8867-e7ff0d664329")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+		(property "Value" "screwhole"
+			(at 0 2.8 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9171129e-9195-47c0-a150-2d7cd25f1ff9")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "06a4d9ee-d585-4329-9e65-811237c59b8b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "75d712a3-f69d-4264-ab4e-f9c70748cb28")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr through_hole)
+		(duplicate_pad_numbers_are_jumpers no)
+		(pad "" np_thru_hole circle
+			(at -0.25 0)
+			(size 2 2)
+			(drill 2)
+			(layers "*.Cu" "*.Mask")
+			(uuid "c1ce2460-e3e3-42e6-9d18-a3c2dc16fd51")
+		)
+		(embedded_fonts no)
+	)
+	(footprint "Suzuki:screwhole"
+		(layer "F.Cu")
+		(uuid "924cc1a8-efd1-48ab-8912-ee85c7a44753")
+		(at 91.5 108)
+		(property "Reference" "REF**"
+			(at 0 -2 0)
+			(unlocked yes)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "d371907d-1ece-4ca8-9e86-07e2496932a9")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+		(property "Value" "screwhole"
+			(at 0 2.8 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f643dfae-5d15-48c0-992b-ffe4169a821d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "daa10808-6902-4d89-b249-f9e7c00167ca")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2668ef03-4f05-48cc-8635-a156a2c36872")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr through_hole)
+		(duplicate_pad_numbers_are_jumpers no)
+		(pad "" np_thru_hole circle
+			(at 0 0)
+			(size 2 2)
+			(drill 2)
+			(layers "*.Cu" "*.Mask")
+			(uuid "f53e0124-b306-4109-a804-9652563b16d5")
+		)
+		(embedded_fonts no)
+	)
 	(footprint "footpritn:RKJXT1F42001"
 		(layer "F.Cu")
 		(uuid "9611e1c8-96e6-496b-9582-b8c2ef6e5619")
@@ -658,6 +792,90 @@
 			(uuid "0b140d64-c18c-4ac4-b12f-9983936bceba")
 		)
 		(embedded_fonts no)
+	)
+	(gr_line
+		(start 89.5 65.5)
+		(end 89.5 109)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d265bd4f-6440-4b61-b123-024f3302c856")
+	)
+	(gr_arc
+		(start 89.5 65.5)
+		(mid 89.792893 64.792893)
+		(end 90.5 64.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "daa6efe7-82b3-4b91-b5af-d23894a629ce")
+	)
+	(gr_line
+		(start 90.5 64.5)
+		(end 109.5 64.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "9b7263ed-9b2f-40d4-9b4d-c82a85a5597f")
+	)
+	(gr_arc
+		(start 90.5 110)
+		(mid 89.792893 109.707107)
+		(end 89.5 109)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "14b352f8-fc99-4c1f-9e46-8709d2166520")
+	)
+	(gr_line
+		(start 90.5 110)
+		(end 109.5 110)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "4536eaa3-572b-4ae1-96e7-7780272d815d")
+	)
+	(gr_arc
+		(start 109.5 64.5)
+		(mid 110.207107 64.792893)
+		(end 110.5 65.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "a178fa11-893c-4585-9be9-f5114719922a")
+	)
+	(gr_line
+		(start 110.5 65.5)
+		(end 110.5 109)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "8029c7db-4397-4c28-a7cd-e9e428161082")
+	)
+	(gr_arc
+		(start 110.5 109)
+		(mid 110.207107 109.707107)
+		(end 109.5 110)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "d239c2ac-12ed-4c4e-bd5a-560acaa6044e")
 	)
 	(segment
 		(start 94.13 103.43)
