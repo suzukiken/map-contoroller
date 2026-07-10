@@ -4,9 +4,16 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+
+enum class PanDirection {
+    WEST, EAST, NORTH, SOUTH
+}
 
 class MapViewModel : ViewModel() {
 
@@ -124,6 +131,34 @@ class MapViewModel : ViewModel() {
         )
     }
 
+    private var panJob: Job? = null
+
+    /** 方向キー長押し中、一定間隔で地図をずらす（OS のキーリピートは使わない） */
+    fun startPan(direction: PanDirection) {
+        panJob?.cancel()
+        panJob = viewModelScope.launch {
+            while (isActive) {
+                when (direction) {
+                    PanDirection.WEST -> moveWest()
+                    PanDirection.EAST -> moveEast()
+                    PanDirection.NORTH -> moveNorth()
+                    PanDirection.SOUTH -> moveSouth()
+                }
+                delay(PAN_INTERVAL_MS)
+            }
+        }
+    }
+
+    fun stopPan() {
+        panJob?.cancel()
+        panJob = null
+    }
+
+    override fun onCleared() {
+        stopPan()
+        super.onCleared()
+    }
+
     fun moveWest() {
         move(-200.0, 0.0)
     }
@@ -169,5 +204,9 @@ class MapViewModel : ViewModel() {
             latitude = camera.latitude + dLat,
             longitude = camera.longitude + dLon
         )
+    }
+
+    companion object {
+        private const val PAN_INTERVAL_MS = 120L
     }
 }

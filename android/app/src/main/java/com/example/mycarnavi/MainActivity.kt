@@ -191,22 +191,17 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (handlePanKeyEvent(event)) {
+            return true
+        }
+
+        if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount > 0) {
+            return true
+        }
 
         if (event.action == KeyEvent.ACTION_DOWN) {
 
             when (event.keyCode) {
-
-                KeyEvent.KEYCODE_DPAD_LEFT ->
-                    viewModel.moveWest()
-
-                KeyEvent.KEYCODE_DPAD_RIGHT ->
-                    viewModel.moveEast()
-
-                KeyEvent.KEYCODE_DPAD_UP ->
-                    viewModel.moveNorth()
-
-                KeyEvent.KEYCODE_DPAD_DOWN ->
-                    viewModel.moveSouth()
 
                 KeyEvent.KEYCODE_PAGE_UP ->
                     viewModel.zoomIn()
@@ -231,5 +226,25 @@ class MainActivity : ComponentActivity() {
         }
 
         return super.dispatchKeyEvent(event)
+    }
+
+    private fun handlePanKeyEvent(event: KeyEvent): Boolean {
+        val direction = when (event.keyCode) {
+            KeyEvent.KEYCODE_DPAD_LEFT -> PanDirection.WEST
+            KeyEvent.KEYCODE_DPAD_RIGHT -> PanDirection.EAST
+            KeyEvent.KEYCODE_DPAD_UP -> PanDirection.NORTH
+            KeyEvent.KEYCODE_DPAD_DOWN -> PanDirection.SOUTH
+            else -> return false
+        }
+
+        when (event.action) {
+            KeyEvent.ACTION_DOWN -> {
+                if (event.repeatCount == 0) {
+                    viewModel.startPan(direction)
+                }
+            }
+            KeyEvent.ACTION_UP -> viewModel.stopPan()
+        }
+        return true
     }
 }

@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -50,11 +49,10 @@ fun MapScreen(
     LaunchedEffect(camera, mapLoaded) {
         if (!mapLoaded) return@LaunchedEffect
 
-        cameraPositionState.animate(
-            CameraUpdateFactory.newLatLngZoom(
-                LatLng(camera.latitude, camera.longitude),
-                camera.zoom
-            )
+        // コントローラー操作は高頻度なので animate せず即時反映（溜まって一気に飛ぶのを防ぐ）
+        cameraPositionState.position = CameraPosition.fromLatLngZoom(
+            LatLng(camera.latitude, camera.longitude),
+            camera.zoom
         )
     }
 
