@@ -12,8 +12,7 @@
   "features": {
     "bootmagic": true,
     "extrakey": true,
-    "encoder": true,
-    "tap_dance": true
+    "encoder": true
   },
   "matrix_pins": {
     "direct": [

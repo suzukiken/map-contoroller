@@ -1,0 +1,17 @@
+{
+  "keyboard": "map_controllor",
+  "keymap": "default",
+  "layout": "LAYOUT",
+  "layers": [
+    [
+      "KC_UP",
+      "KC_LEFT", "KC_ENT", "KC_RGHT",
+      "KC_DOWN"
+    ]
+  ],
+  "encoders": [
+    [
+      { "ccw": "KC_PGDN", "cw": "KC_PGUP" }
+    ]
+  ]
+}
