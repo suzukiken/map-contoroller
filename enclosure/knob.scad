@@ -6,7 +6,7 @@
 // --- シャフト（RKJXT1F42001 内側シャフト） ---
 shaft_d = 2.5;
 shaft_flat_w = 2.0;      // D カット側の幅（フラット面）
-shaft_bore_clearance = 0.15;
+shaft_bore_clearance = 0.4;
 shaft_engagement = 6.0;  // シャフト突出 ~6.6 mm
 
 // --- ノブ外形 ---

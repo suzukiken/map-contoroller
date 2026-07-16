@@ -1,14 +1,14 @@
 padding = 1.6; // wall width
 // a little space for inserting PCB, 0.5 is good for PETG
 // 0.3 is good for PLA with 0.6 nozzle
-board_margin = 0.3;
+board_margin = 0.4;
 side_padding = padding + board_margin;
 board_2_fook_margin = 0.3;
 // board_depth = 1.6; // 0.8 or 1.6
 board_under_space = 1.6;
-board_corner_radius = 1.5;
+board_corner_radius = 0.5;
 fook_height = 0.6;
-fook_length = 5;
+fook_length = 2;
 fook_width = 1.0;
 pico_width = 21;
 pico_offset = 2;
