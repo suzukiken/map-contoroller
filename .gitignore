@@ -16,6 +16,9 @@ captures/
 *.apk
 *.aab
 
+# iOS
+ios/Secrets.xcconfig
+
 # KiCad
 .history
 *.kicad_prl
