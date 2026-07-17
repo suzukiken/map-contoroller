@@ -7,9 +7,10 @@ struct MapKitMapView: UIViewRepresentable {
     let route: RouteInfo?
     let parkingPlaces: [ParkingPlace]
     let showsUserLocation: Bool
+    let mapProxy: MapViewProxy
 
     func makeCoordinator() -> Coordinator {
-        Coordinator()
+        Coordinator(mapProxy: mapProxy)
     }
 
     func makeUIView(context: Context) -> MKMapView {
@@ -18,6 +19,12 @@ struct MapKitMapView: UIViewRepresentable {
         mapView.showsTraffic = true
         mapView.showsUserLocation = showsUserLocation
         mapView.pointOfInterestFilter = .excludingAll
+        // コントローラー操作のみ（タッチで地図がずれると Enter の中心と不一致になる）
+        mapView.isScrollEnabled = false
+        mapView.isZoomEnabled = false
+        mapView.isRotateEnabled = false
+        mapView.isPitchEnabled = false
+        context.coordinator.attach(mapView)
         return mapView
     }
 
@@ -26,43 +33,22 @@ struct MapKitMapView: UIViewRepresentable {
         context.coordinator.camera = camera
 
         if context.coordinator.isLoaded {
-            applyCamera(mapView, camera: camera)
+            Self.applyCamera(mapView, camera: camera)
         }
 
-        updateAnnotations(mapView)
+        context.coordinator.updateDestination(destination)
+        context.coordinator.updateParkingPlaces(parkingPlaces)
         updateRouteOverlay(mapView)
     }
 
-    private func applyCamera(_ mapView: MKMapView, camera: CameraState) {
+    private static func applyCamera(_ mapView: MKMapView, camera: CameraState) {
         let center = CLLocationCoordinate2D(latitude: camera.latitude, longitude: camera.longitude)
-        let distance = altitude(forZoom: camera.zoom, latitude: camera.latitude)
-        let mkCamera = MKMapCamera(lookingAtCenter: center, fromDistance: distance, pitch: 0, heading: 0)
-        mapView.setCamera(mkCamera, animated: false)
-    }
-
-    private func updateAnnotations(_ mapView: MKMapView) {
-        let existing = mapView.annotations.filter { !($0 is MKUserLocation) }
-        mapView.removeAnnotations(existing)
-
-        if let destination {
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(
-                latitude: destination.latitude,
-                longitude: destination.longitude
-            )
-            annotation.title = "目的地"
-            mapView.addAnnotation(annotation)
-        }
-
-        for place in parkingPlaces {
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(
-                latitude: place.latitude,
-                longitude: place.longitude
-            )
-            annotation.title = place.name
-            mapView.addAnnotation(annotation)
-        }
+        let region = MapCameraMath.region(
+            center: center,
+            zoom: camera.zoom,
+            viewportWidth: mapView.bounds.width
+        )
+        mapView.setRegion(region, animated: false)
     }
 
     private func updateRouteOverlay(_ mapView: MKMapView) {
@@ -74,21 +60,75 @@ struct MapKitMapView: UIViewRepresentable {
         mapView.addOverlay(polyline)
     }
 
-    private func altitude(forZoom zoom: Float, latitude: Double) -> CLLocationDistance {
-        78_106.03515625 * cos(latitude * .pi / 180) / pow(2.0, Double(zoom))
-    }
-
     final class Coordinator: NSObject, MKMapViewDelegate {
         var isLoaded = false
         var camera = CameraState(latitude: 35.681236, longitude: 139.767125, zoom: 15)
+        private let mapProxy: MapViewProxy
+        private weak var mapView: MKMapView?
+        private var destinationAnnotation: MKPointAnnotation?
+        private var parkingAnnotations: [MKPointAnnotation] = []
+
+        init(mapProxy: MapViewProxy) {
+            self.mapProxy = mapProxy
+        }
+
+        func attach(_ mapView: MKMapView) {
+            self.mapView = mapView
+            mapProxy.mapView = mapView
+        }
+
+        func updateDestination(_ destination: Destination?) {
+            guard let mapView else { return }
+            if let destinationAnnotation {
+                mapView.removeAnnotation(destinationAnnotation)
+                self.destinationAnnotation = nil
+            }
+            guard let destination else { return }
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = CLLocationCoordinate2D(
+                latitude: destination.latitude,
+                longitude: destination.longitude
+            )
+            annotation.title = "目的地"
+            destinationAnnotation = annotation
+            mapView.addAnnotation(annotation)
+        }
+
+        func updateParkingPlaces(_ places: [ParkingPlace]) {
+            guard let mapView else { return }
+            mapView.removeAnnotations(parkingAnnotations)
+            parkingAnnotations = places.map { place in
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = CLLocationCoordinate2D(
+                    latitude: place.latitude,
+                    longitude: place.longitude
+                )
+                annotation.title = place.name
+                return annotation
+            }
+            mapView.addAnnotations(parkingAnnotations)
+        }
 
         func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
             guard !isLoaded else { return }
             isLoaded = true
-            let center = CLLocationCoordinate2D(latitude: camera.latitude, longitude: camera.longitude)
-            let distance = 78_106.03515625 * cos(camera.latitude * .pi / 180) / pow(2.0, Double(camera.zoom))
-            let mkCamera = MKMapCamera(lookingAtCenter: center, fromDistance: distance, pitch: 0, heading: 0)
-            mapView.setCamera(mkCamera, animated: false)
+            MapKitMapView.applyCamera(mapView, camera: camera)
+        }
+
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            if annotation is MKUserLocation { return nil }
+            let identifier = "Pin"
+            let view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+                ?? MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view.annotation = annotation
+            view.canShowCallout = true
+            if annotation === destinationAnnotation {
+                view.markerTintColor = .systemRed
+                view.glyphImage = nil
+            } else {
+                view.markerTintColor = .systemTeal
+            }
+            return view
         }
 
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {

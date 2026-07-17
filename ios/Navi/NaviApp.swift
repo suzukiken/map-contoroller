@@ -4,15 +4,17 @@ import SwiftUI
 @main
 struct NaviApp: App {
     @State private var viewModel = MapViewModel()
+    @State private var mapProxy = MapViewProxy()
     @State private var locationManager = LocationManager()
     @State private var speechManager = SpeechInputManager()
 
     var body: some Scene {
         WindowGroup {
             KeyHandlingRootView(viewModel: viewModel, onVoiceInput: startVoiceInput) {
-                AppRootView(viewModel: viewModel)
+                AppRootView(viewModel: viewModel, mapProxy: mapProxy)
             }
             .onAppear {
+                viewModel.mapProxy = mapProxy
                 setupLocation()
             }
         }
