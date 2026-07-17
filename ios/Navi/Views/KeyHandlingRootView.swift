@@ -88,6 +88,9 @@ final class KeyHandlingViewController: UIViewController {
             keyCommand(input: "P", action: #selector(handleParking)),
             keyCommand(input: UIKeyCommand.inputPageUp, action: #selector(handlePageUp)),
             keyCommand(input: UIKeyCommand.inputPageDown, action: #selector(handlePageDown)),
+            keyCommand(input: "+", action: #selector(handlePageUp)),
+            keyCommand(input: "=", action: #selector(handlePageUp)),
+            keyCommand(input: "-", action: #selector(handlePageDown)),
         ]
     }
 
@@ -119,6 +122,18 @@ final class KeyHandlingViewController: UIViewController {
                 handled = true
             case .keyboardSpacebar:
                 viewModel?.centerOnCurrentLocation()
+                handled = true
+            case .keyboardPageUp:
+                viewModel?.zoomIn()
+                handled = true
+            case .keyboardPageDown:
+                viewModel?.zoomOut()
+                handled = true
+            case .keyboardEqualSign:
+                viewModel?.zoomIn()
+                handled = true
+            case .keyboardHyphen:
+                viewModel?.zoomOut()
                 handled = true
             default:
                 break

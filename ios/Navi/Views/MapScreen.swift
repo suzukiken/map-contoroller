@@ -3,6 +3,7 @@ import SwiftUI
 
 struct MapScreen: View {
     @Bindable var viewModel: MapViewModel
+    let mapProxy: MapViewProxy
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -11,7 +12,8 @@ struct MapScreen: View {
                 destination: viewModel.destination,
                 route: viewModel.route,
                 parkingPlaces: viewModel.parkingPlaces,
-                showsUserLocation: viewModel.locationPermissionGranted
+                showsUserLocation: viewModel.locationPermissionGranted,
+                mapProxy: mapProxy
             )
             .ignoresSafeArea()
 
